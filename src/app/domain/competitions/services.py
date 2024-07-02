@@ -5,8 +5,7 @@ from typing import TYPE_CHECKING, Any
 from advanced_alchemy.service import SQLAlchemyAsyncRepositoryService
 
 from app.config import constants
-from app.db.models import Competition, User
-from app.lib import crypt
+from app.db.models import Competition
 
 from .repositories import CompetitionRepository
 
@@ -75,10 +74,3 @@ class CompetitionService(SQLAlchemyAsyncRepositoryService[Competition]):
             load=load,
             execution_options=execution_options,
         )
-
-    async def to_model(self, data: User | dict[str, Any], operation: str | None = None) -> User:
-        if isinstance(data, dict) and "password" in data:
-            password: bytes | str | None = data.pop("password", None)
-            if password is not None:
-                data.update({"hashed_password": await crypt.get_password_hash(password)})
-        return await super().to_model(data, operation)

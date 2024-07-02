@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy.orm import selectinload
-
 from app.domain.divisions.services import DivisionService
 
 if TYPE_CHECKING:

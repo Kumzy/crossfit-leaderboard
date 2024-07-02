@@ -1,3 +1,6 @@
+from .competition import Competition
+from .country import Country
+from .division import Division
 from .oauth_account import UserOauthAccount
 from .role import Role
 from .tag import Tag
@@ -9,11 +12,9 @@ from .team_tag import team_tag
 from .user import User
 from .user_role import UserRole
 
-from .competition import Competition
-from .division import Division
-
 __all__ = (
     "Competition",
+    "Country",
     "Division",
     "User",
     "UserOauthAccount",

@@ -21,8 +21,6 @@ class Competition(CamelizedBaseStruct):
     id: UUID
     name: str | None = None
     description: str = False
-    is_active: bool = False
-    is_verified: bool = False
     divisions: list[Division] = []
 
 

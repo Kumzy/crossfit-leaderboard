@@ -1,7 +1,9 @@
+from pathlib import Path
+
 from litestar import Controller, get
 from litestar.response import Template
 from litestar.status_codes import HTTP_200_OK
-from pathlib import Path
+
 from app.config import constants
 
 

@@ -8,10 +8,7 @@ module.exports = {
     "{resources,templates}/**/*.{js,cjs,mjs,jsx,ts,tsx,vue,j2,html,htm}",
   ],
   theme: {
-    extend: {}
+    extend: {},
   },
-  plugins: [
-    require("@tailwindcss/forms"),
-    require("@tailwindcss/typography"),
-  ],
+  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
 }

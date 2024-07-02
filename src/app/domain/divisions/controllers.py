@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, Annotated
 
 from litestar import Controller, delete, get, patch, post
 from litestar.di import Provide
-from litestar.params import Dependency, Parameter
 from litestar.exceptions import NotFoundException
+from litestar.params import Dependency, Parameter
 
 from app.domain.accounts.guards import requires_superuser
 from app.domain.divisions import urls
