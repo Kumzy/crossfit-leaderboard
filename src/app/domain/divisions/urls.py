@@ -1,0 +1,5 @@
+DIVISION_LIST = "/api/competitions/{competition_id:uuid}/divisions"
+DIVISION_DELETE = "/api/competitions/{competition_id:uuid}/divisions/{division_id:uuid}"
+DIVISION_DETAIL = "/api/competitions/{competition_id:uuid}/divisions/{division_id:uuid}"
+DIVISION_UPDATE = "/api/competitions/{competition_id:uuid}/divisions/{division_id:uuid}"
+DIVISION_CREATE = "/api/competitions/divisions"
