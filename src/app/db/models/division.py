@@ -9,11 +9,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
     from .competition import Competition
+    from .workout import Workout
 
 
 class Division(UUIDAuditBase, SlugKey):
-    """A division class.
-    """
+    """A division class."""
 
     __tablename__ = "division"
     __pii_columns__ = {"name", "description"}
@@ -22,7 +22,7 @@ class Division(UUIDAuditBase, SlugKey):
     competition_id: Mapped[UUID] = mapped_column(ForeignKey("competition.id", ondelete="cascade"), nullable=False)
 
     is_team: Mapped[bool] = mapped_column(default=False, nullable=False)
-    team_size: Mapped[int | None ] = mapped_column(nullable=True)
+    team_size: Mapped[int | None] = mapped_column(nullable=True)
     # -----------
     # ORM Relationships
     # ------------
@@ -32,4 +32,10 @@ class Division(UUIDAuditBase, SlugKey):
         innerjoin=True,
         uselist=False,
         lazy="joined",
+    )
+    workouts: Mapped[list[Workout]] = relationship(
+        back_populates="division",
+        cascade="all, delete",
+        passive_deletes=True,
+        lazy="selectin",
     )

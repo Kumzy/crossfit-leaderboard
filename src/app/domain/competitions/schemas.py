@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 from datetime import datetime  # noqa: TCH003
+from typing import TYPE_CHECKING
 from uuid import UUID  # noqa: TCH003
 
 import msgspec
 
-from app.db.models.division import Division
 from app.lib.schema import CamelizedBaseStruct
+
+if TYPE_CHECKING:
+    from app.db.models.division import Division
 
 __all__ = (
     "Competition",
@@ -20,7 +23,7 @@ class Competition(CamelizedBaseStruct):
 
     id: UUID
     name: str | None = None
-    description: str = False
+    description: str | None = None
     divisions: list[Division] = []
 
 

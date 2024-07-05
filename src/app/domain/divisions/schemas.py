@@ -4,7 +4,6 @@ from uuid import UUID  # noqa: TCH003
 
 import msgspec
 
-from app.db.models.division import Division
 from app.lib.schema import CamelizedBaseStruct
 
 __all__ = (
@@ -19,7 +18,7 @@ class Division(CamelizedBaseStruct):
 
     id: UUID
     name: str | None = None
-    description: str = False
+    description: str | None = None
 
 
 class DivisionCreate(CamelizedBaseStruct):

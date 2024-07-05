@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 
 class Team(UUIDAuditBase, SlugKey):
-    """A group of users with common permissions.
+    """A group of competitors with common permissions.
     Users can create and invite users to a team.
     """
 
@@ -23,7 +23,6 @@ class Team(UUIDAuditBase, SlugKey):
     __pii_columns__ = {"name", "description"}
     name: Mapped[str] = mapped_column(nullable=False, index=True)
     description: Mapped[str | None] = mapped_column(String(length=500), nullable=True, default=None)
-    is_active: Mapped[bool] = mapped_column(default=True, nullable=False)
     # -----------
     # ORM Relationships
     # ------------

@@ -80,8 +80,6 @@ class DivisionController(Controller):
         ],
     ) -> Division:
         """Get a division."""
-        # db_obj = await divisions_service.get(division_id)
-
         db_obj = await divisions_service.get_one(division_id=division_id, competition_id=competition_id)
         if db_obj.competition is None or db_obj.competition.id != competition_id:
             msg = "Division not found"

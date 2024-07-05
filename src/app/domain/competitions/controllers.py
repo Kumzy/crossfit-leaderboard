@@ -25,7 +25,6 @@ class CompetitionController(Controller):
     """Competition Controller."""
 
     tags = ["Competitions"]
-    #guards = [requires_superuser]
     dependencies = {"competitions_service": Provide(provide_competitions_service)}
     signature_namespace = {"CompetitionService": CompetitionService}
     dto = None

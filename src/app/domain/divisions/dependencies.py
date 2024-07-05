@@ -16,8 +16,6 @@ async def provide_divisions_service(db_session: AsyncSession) -> AsyncGenerator[
     """Construct repository and service objects for the request."""
     async with DivisionService.new(
         session=db_session,
-        load=[
-            # selectinload(Competition.divisions),
-        ],
+        load=[],
     ) as service:
         yield service

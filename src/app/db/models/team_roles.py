@@ -6,5 +6,5 @@ from enum import Enum
 class TeamRoles(str, Enum):
     """Valid Values for Team Roles."""
 
-    ADMIN = "ADMIN"
+    ADMIN = "CAPTAIN"
     MEMBER = "MEMBER"
