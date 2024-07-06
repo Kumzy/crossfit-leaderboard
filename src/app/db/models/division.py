@@ -7,6 +7,8 @@ from advanced_alchemy.base import SlugKey, UUIDAuditBase
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from .division_scoring_type import DivisionScoringType
+
 if TYPE_CHECKING:
     from .competition import Competition
     from .workout import Workout
@@ -26,6 +28,13 @@ class Division(UUIDAuditBase, SlugKey):
     # -----------
     # ORM Relationships
     # ------------
+    division_scoring_type: Mapped[DivisionScoringType] = mapped_column(
+        String(length=50),
+        default=DivisionScoringType.RANK,
+        nullable=False,
+        index=True,
+    )
+
     competition: Mapped[Competition] = relationship(
         back_populates="divisions",
         foreign_keys="Division.competition_id",
