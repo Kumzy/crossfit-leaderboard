@@ -1,11 +1,12 @@
-from pathlib import Path
 
-from litestar import Controller, get
-from litestar.response import Template
-from litestar.status_codes import HTTP_200_OK
+from litestar import Controller, Request, get
+from litestar.connection.base import AuthT, StateT, UserT
+from litestar.plugins.flash import flash  # pyright: ignore[reportUnknownVariableType]
+from msgspec import Struct
 
-from app.config import constants
 
+class Message(Struct):
+    message: str
 
 class WebController(Controller):
     """Web Controller."""
@@ -13,12 +14,14 @@ class WebController(Controller):
     include_in_schema = False
     opt = {"exclude_from_auth": True}
 
-    @get(
-        path=[constants.SITE_INDEX, f"{constants.SITE_INDEX}/{{path:path}}"],
-        operation_id="WebIndex",
-        name="frontend:index",
-        status_code=HTTP_200_OK,
-    )
-    async def index(self, path: Path | None = None) -> Template:
+    @get("/", component="Home")
+    async def index(self, request: Request[UserT, AuthT, StateT]) -> Message:
         """Serve site root."""
-        return Template(template_name="site/index.html.j2")
+        flash(request, "Oh no! I've been flashed!", category="error")
+        return Message(message="welcome")
+
+    @get("/dashboard", component="Dashboard")
+    async def dashboard(self, request: Request[UserT, AuthT, StateT]) -> Message:
+        """Serve site root."""
+        flash(request, "Oh no! I've been flashed!", category="error")
+        return Message(message="dashboard details")

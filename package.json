@@ -6,6 +6,7 @@
 		"watch": "vite build --watch"
 	},
 	"dependencies": {
+		"@inertiajs/vue3": "^1.2.0",
 		"axios": "^1.6.2",
 		"echarts": "^5.4.3",
 		"litestar-vite-plugin": "^0.5.1",

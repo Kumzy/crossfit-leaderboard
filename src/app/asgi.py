@@ -15,6 +15,8 @@ def create_app() -> Litestar:
 
     from litestar import Litestar
     from litestar.di import Provide
+    from litestar.middleware.session.server_side import ServerSideSessionConfig
+    from litestar.stores.memory import MemoryStore
 
     from app.config import app as config
     from app.config import constants
@@ -34,6 +36,7 @@ def create_app() -> Litestar:
         cors_config=config.cors,
         dependencies=dependencies,
         debug=settings.app.DEBUG,
+        middleware=[ServerSideSessionConfig().middleware],
         openapi_config=openapi.config,
         route_handlers=routers.route_handlers,
         plugins=[
@@ -43,9 +46,12 @@ def create_app() -> Litestar:
             plugins.vite,
             plugins.saq,
             plugins.granian,
+            plugins.inertia,
+            plugins.flasher,
         ],
         on_app_init=[auth.on_app_init],
         listeners=[account_signals.user_created_event_handler, team_signals.team_created_event_handler],
+        stores={"sessions": MemoryStore()},
     )
 
 
