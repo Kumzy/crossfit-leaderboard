@@ -8,6 +8,7 @@ from msgspec import Struct
 class Message(Struct):
     message: str
 
+
 class WebController(Controller):
     """Web Controller."""
 

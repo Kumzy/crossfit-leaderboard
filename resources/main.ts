@@ -15,9 +15,9 @@
 
 import "@/assets/main.css";
 
-import Layout from "@/Layout.vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { createApp, h } from "vue";
+import Layout from "./Layout.vue";
 
 createInertiaApp({
 	resolve: (name) => {

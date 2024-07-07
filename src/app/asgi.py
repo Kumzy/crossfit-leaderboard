@@ -47,7 +47,7 @@ def create_app() -> Litestar:
             plugins.saq,
             plugins.granian,
             plugins.inertia,
-            plugins.flasher,
+            # plugins.flasher,
         ],
         on_app_init=[auth.on_app_init],
         listeners=[account_signals.user_created_event_handler, team_signals.team_created_event_handler],
