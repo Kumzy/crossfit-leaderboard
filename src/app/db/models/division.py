@@ -22,7 +22,6 @@ class Division(UUIDAuditBase, SlugKey):
     name: Mapped[str] = mapped_column(nullable=False, index=True)
     description: Mapped[str | None] = mapped_column(String(length=500), nullable=True, default=None)
     competition_id: Mapped[UUID] = mapped_column(ForeignKey("competition.id", ondelete="cascade"), nullable=False)
-
     is_team: Mapped[bool] = mapped_column(default=False, nullable=False)
     team_size: Mapped[int | None] = mapped_column(nullable=True)
     # -----------
@@ -34,7 +33,6 @@ class Division(UUIDAuditBase, SlugKey):
         nullable=False,
         index=True,
     )
-
     competition: Mapped[Competition] = relationship(
         back_populates="divisions",
         foreign_keys="Division.competition_id",

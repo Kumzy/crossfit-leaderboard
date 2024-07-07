@@ -19,7 +19,6 @@ class Workout(UUIDAuditBase):
     name: Mapped[str] = mapped_column(nullable=False, index=True)
     description: Mapped[str | None] = mapped_column(String(length=500), nullable=True, default=None)
     division_id: Mapped[UUID] = mapped_column(ForeignKey("division.id", ondelete="cascade"), nullable=False)
-
     # -----------
     # ORM Relationships
     # ------------

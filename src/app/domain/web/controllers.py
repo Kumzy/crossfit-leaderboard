@@ -26,3 +26,9 @@ class WebController(Controller):
         """Serve site root."""
         flash(request, "Oh no! I've been flashed!", category="error")
         return Message(message="dashboard details")
+
+    @get("/login", component="Login")
+    async def login(self, request: Request[UserT, AuthT, StateT]) -> Message:
+        """Serve login page."""
+        flash(request, "Oh no! I've been flashed!", category="error")
+        return Message(message="login")

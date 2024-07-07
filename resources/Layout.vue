@@ -7,6 +7,7 @@ import { Link } from "@inertiajs/vue3";
     <header>
       <Link class="text-sm m-2" href="/">Home</Link>
       <Link class="text-sm m-2" href="/dashboard/">Dashboard</Link>
+      <Link class="text-sm m-2" href="/login/">Login</Link>
     </header>
     <div>
       <slot />
