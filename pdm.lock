@@ -4,8 +4,8 @@
 [metadata]
 groups = ["default", "dev", "docs", "linting", "test"]
 strategy = ["cross_platform", "inherit_metadata"]
-lock_version = "4.4.1"
-content_hash = "sha256:edf021f797cc325073e0662de36ec7bf4d9171ff18dc0f97b58c0ba0752e197a"
+lock_version = "4.4.2"
+content_hash = "sha256:7f90a36b26171447cb6864826d80bbd2501c07a165636dc40287c288e7a7f6d9"
 
 [[package]]
 name = "accessible-pygments"
@@ -23,7 +23,7 @@ files = [
 
 [[package]]
 name = "advanced-alchemy"
-version = "0.17.1"
+version = "0.17.2"
 requires_python = ">=3.8"
 summary = "Ready-to-go SQLAlchemy concoctions."
 groups = ["default"]
@@ -34,24 +34,24 @@ dependencies = [
     "typing-extensions>=4.0.0",
 ]
 files = [
-    {file = "advanced_alchemy-0.17.1-py3-none-any.whl", hash = "sha256:a48d2702e430febd277dc66c0959ce0fbd85eb475a625ec5999b88688bb36167"},
-    {file = "advanced_alchemy-0.17.1.tar.gz", hash = "sha256:3bee29096c1b9cea4102e7366c6d8685a51030d078778a6748f8e4c43013ab81"},
+    {file = "advanced_alchemy-0.17.2-py3-none-any.whl", hash = "sha256:c3ec72c43200a4f8c8138808addab5e00a136f758822291851de824ea843a8d9"},
+    {file = "advanced_alchemy-0.17.2.tar.gz", hash = "sha256:7026fd6fe3aadb665ab0b87dc2a581e68e0df12fe62dcb5ce395bfe101abf663"},
 ]
 
 [[package]]
 name = "advanced-alchemy"
-version = "0.17.1"
+version = "0.17.2"
 extras = ["uuid"]
 requires_python = ">=3.8"
 summary = "Ready-to-go SQLAlchemy concoctions."
 groups = ["default"]
 dependencies = [
-    "advanced-alchemy==0.17.1",
+    "advanced-alchemy==0.17.2",
     "uuid-utils>=0.6.1",
 ]
 files = [
-    {file = "advanced_alchemy-0.17.1-py3-none-any.whl", hash = "sha256:a48d2702e430febd277dc66c0959ce0fbd85eb475a625ec5999b88688bb36167"},
-    {file = "advanced_alchemy-0.17.1.tar.gz", hash = "sha256:3bee29096c1b9cea4102e7366c6d8685a51030d078778a6748f8e4c43013ab81"},
+    {file = "advanced_alchemy-0.17.2-py3-none-any.whl", hash = "sha256:c3ec72c43200a4f8c8138808addab5e00a136f758822291851de824ea843a8d9"},
+    {file = "advanced_alchemy-0.17.2.tar.gz", hash = "sha256:7026fd6fe3aadb665ab0b87dc2a581e68e0df12fe62dcb5ce395bfe101abf663"},
 ]
 
 [[package]]
@@ -1308,8 +1308,7 @@ name = "litestar-vite"
 version = "0.1.22"
 requires_python = ">=3.8"
 git = "https://github.com/cofin/litestar-vite"
-ref = "inertia"
-revision = "513bb081a792885225d70b03e92e9421dc595f4b"
+revision = "34ea75f65dac8db4a79a5693e29f42f603fc1cf1"
 summary = "Vite plugin for Litestar"
 groups = ["default"]
 dependencies = [
