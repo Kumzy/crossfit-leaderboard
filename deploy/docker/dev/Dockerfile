@@ -47,7 +47,7 @@ RUN apt-get install -y --no-install-recommends build-essential curl \
 WORKDIR /workspace/app
 COPY pyproject.toml pdm.lock README.md .pre-commit-config.yaml LICENSE Makefile \
   package.json package-lock.json vite.config.ts tsconfig.json tsconfig.node.json \
-  tailwind.config.cjs postcss.config.cjs components.json \
+  tailwind.config.js postcss.config.js components.json \
   ./
 COPY scripts ./scripts/
 COPY public ./public/

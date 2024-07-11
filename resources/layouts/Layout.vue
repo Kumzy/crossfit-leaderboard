@@ -1,5 +1,6 @@
-<script setup>
-import { Link } from "@inertiajs/vue3";
+<script setup lang="ts">
+import { Link } from "@inertiajs/vue3"
+import { route } from "@/utils/route.ts"
 </script>
 
 <template>

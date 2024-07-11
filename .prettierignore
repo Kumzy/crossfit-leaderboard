@@ -5,7 +5,7 @@ deploy
 docs
 *.json
 .eslintrc.cjs
-postcss.config.cjs
+postcss.config.js
 .github
 .venv
 media

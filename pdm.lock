@@ -5,7 +5,7 @@
 groups = ["default", "dev", "docs", "linting", "test"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:7f90a36b26171447cb6864826d80bbd2501c07a165636dc40287c288e7a7f6d9"
+content_hash = "sha256:b2fb49045a8f276333baecc2aba2b242a859d44e2b479414b5c3056d1f906ed0"
 
 [[package]]
 name = "accessible-pygments"
@@ -1293,7 +1293,7 @@ files = [
 [[package]]
 name = "litestar-sphinx-theme"
 version = "0.2.0"
-requires_python = ">=3.8,<4.0"
+requires_python = "<4.0,>=3.8"
 git = "https://github.com/litestar-org/litestar-sphinx-theme.git"
 revision = "76b1d0e4c8afff1ad135b1917fe09cf6c1cc6c9b"
 summary = "A Sphinx theme for the Litestar organization"
@@ -1308,7 +1308,8 @@ name = "litestar-vite"
 version = "0.1.22"
 requires_python = ">=3.8"
 git = "https://github.com/cofin/litestar-vite"
-revision = "34ea75f65dac8db4a79a5693e29f42f603fc1cf1"
+ref = "inertia-tests"
+revision = "d115e4d99381d8b5fa7d632cbc042abc77ff1c2b"
 summary = "Vite plugin for Litestar"
 groups = ["default"]
 dependencies = [

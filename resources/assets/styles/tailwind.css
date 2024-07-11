@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.badge {
+  @apply capitalize inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium ring-1 ring-inset;
+}
+
+.badge-green {
+  @apply bg-green-50 text-green-800 ring-green-600/20;
+}
+
+.badge-red {
+  @apply bg-red-50 text-red-800 ring-red-600/20;
+}
+
+.badge-yellow {
+  @apply bg-yellow-50 text-yellow-800 ring-yellow-600/20;
+}
+
+.badge-gray {
+  @apply bg-gray-50 text-gray-800 ring-gray-600/20;
+}
+
+/* <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">Dark</span> */

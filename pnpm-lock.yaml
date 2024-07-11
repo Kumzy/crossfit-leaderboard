@@ -15,8 +15,8 @@ dependencies:
     specifier: ^5.4.3
     version: 5.5.1
   litestar-vite-plugin:
-    specifier: ^0.5.1
-    version: 0.5.2(vite@5.3.3)
+    specifier: ^0.6.2
+    version: 0.6.2(vite@5.3.3)
   pinia:
     specifier: ^2.1.7
     version: 2.1.7(typescript@5.2.2)(vue@3.4.31)
@@ -2849,8 +2849,8 @@ packages:
       wrap-ansi: 7.0.0
     dev: true
 
-  /litestar-vite-plugin@0.5.2(vite@5.3.3):
-    resolution: {integrity: sha512-VWcfqEzykOYQln4/Wvc2i6hoODqB5/kuX4uyDo0ohgqgzbWqnEfmc+WPJM9aG6OoDvfD1N660v+8L4ogq2p/AA==}
+  /litestar-vite-plugin@0.6.2(vite@5.3.3):
+    resolution: {integrity: sha512-SOXH4qZdx3lZl1dp42nRVyWmNywmvl2s3rmLZJqyQ9GyT2Rnd9Qxwaswiuapj+INjALT4Oj93H6L2BYIaXF9AA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -2858,7 +2858,7 @@ packages:
     dependencies:
       picocolors: 1.0.1
       vite: 5.3.3(@types/node@18.19.39)
-      vite-plugin-full-reload: 1.1.0
+      vite-plugin-full-reload: 1.2.0
     dev: false
 
   /local-pkg@0.4.3:
@@ -4066,8 +4066,8 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-full-reload@1.1.0:
-    resolution: {integrity: sha512-3cObNDzX6DdfhD9E7kf6w2mNunFpD7drxyNgHLw+XwIYAgb+Xt16SEXo0Up4VH+TMf3n+DSVJZtW2POBGcBYAA==}
+  /vite-plugin-full-reload@1.2.0:
+    resolution: {integrity: sha512-kz18NW79x0IHbxRSHm0jttP4zoO9P9gXh+n6UTwlNKnviTTEpOlum6oS9SmecrTtSr+muHEn5TUuC75UovQzcA==}
     dependencies:
       picocolors: 1.0.1
       picomatch: 2.3.1

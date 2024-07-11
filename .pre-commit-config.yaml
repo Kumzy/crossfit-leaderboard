@@ -20,7 +20,7 @@ repos:
     rev: v0.4.0
     hooks:
       - id: biome-check
-        exclude: templates|migrations|scripts|docs|dist|.venv|public
+        exclude: templates|migrations|scripts|docs|dist|.venv|public|api-specs.ts
         additional_dependencies: ["@biomejs/biome"]
   - repo: https://github.com/ariebovenberg/slotscheck
     rev: v0.19.0
