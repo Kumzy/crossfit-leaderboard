@@ -15,7 +15,6 @@ const form = useForm({
   username: null,
   password: null,
 })
-
 </script>
 
 <template>

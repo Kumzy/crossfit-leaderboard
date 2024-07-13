@@ -5,7 +5,7 @@ defineProps({
   },
 })
 //defineProps({ auth: Object })
-
+import QRCodeCard from "@/components/QRCodeCard.vue"
 const workouts = [1, 2, 3, 4, 5] // Example workout placeholders
 const competitors = [
   {
@@ -26,6 +26,10 @@ const competitors = [
 
 <template>
   <div class="container mx-auto p-4">
+    <QRCodeCard
+      qrCodeSrc="https://example.com/qrcode.png"
+      link="https://example.com"
+    />
     <h1 class="text-2xl font-bold mb-4">CrossFit Competition Leaderboard</h1>
     {{ auth.user }}
     <div class="overflow-x-auto">
