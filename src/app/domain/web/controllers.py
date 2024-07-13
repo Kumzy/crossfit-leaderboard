@@ -1,7 +1,8 @@
 
+from typing import Any
+
 from litestar import Controller, Request, get
-from litestar.connection.base import AuthT, StateT, UserT
-from litestar.plugins.flash import flash  # pyright: ignore[reportUnknownVariableType]
+from litestar_vite.inertia import share
 from msgspec import Struct
 
 
@@ -15,20 +16,31 @@ class WebController(Controller):
     include_in_schema = False
     opt = {"exclude_from_auth": True}
 
-    @get("/", component="Home")
-    async def index(self, request: Request[UserT, AuthT, StateT]) -> Message:
+    @get(
+        component="Home",
+        path="/",
+        name="home",
+    )
+    async def home(self, path: str | None = None) -> Message:
         """Serve site root."""
-        flash(request, "Oh no! I've been flashed!", category="error")
-        return Message(message="welcome")
+        return Message("Welcome back.")
 
-    @get("/dashboard", component="Dashboard")
-    async def dashboard(self, request: Request[UserT, AuthT, StateT]) -> Message:
+    @get(
+        component="Dashboard",
+        path="/dashboard",
+        name="dashboard",
+    )
+    async def dashboard(self, path: str | None = None) -> Message:
         """Serve site root."""
-        flash(request, "Oh no! I've been flashed!", category="error")
-        return Message(message="dashboard details page")
+        return Message("Welcome back.")
 
-    @get("/login", component="Login")
-    async def login(self, request: Request[UserT, AuthT, StateT]) -> Message:
-        """Serve login page."""
-        flash(request, "Oh no! I've been flashed!", category="error")
-        return Message(message="login")
+    @get(
+        component="Leaderboard",
+        path="/leaderboard",
+        name="leaderboard",
+    )
+    async def leaderboard(self, request: Request[Any, Any, Any]) -> dict[str, Any]:
+        """Serve leaderboard page."""
+        share(request,"auth", {"user": "nobody"})
+        #flash(request, "Oh no! I've been flashed!", category="error")
+        return {"thing": "value"}

@@ -12,9 +12,11 @@ from litestar.config.cors import CORSConfig
 from litestar.config.csrf import CSRFConfig
 from litestar.logging.config import LoggingConfig, StructLoggingConfig
 from litestar.middleware.logging import LoggingMiddlewareConfig
+from litestar.middleware.session.server_side import ServerSideSessionConfig
 from litestar.plugins.structlog import StructlogConfig
 from litestar_saq import CronJob, QueueConfig, SAQConfig
 from litestar_vite import ViteConfig
+from litestar_vite.inertia import InertiaConfig
 
 from .base import get_settings
 
@@ -48,6 +50,8 @@ vite = ViteConfig(
     port=settings.vite.PORT,
     host=settings.vite.HOST,
 )
+inertia = InertiaConfig(root_template="site/index.html.j2")
+session = ServerSideSessionConfig(max_age=3600)
 saq = SAQConfig(
     redis=settings.redis.client,
     web_enabled=settings.saq.WEB_ENABLED,
@@ -87,26 +91,6 @@ log = StructlogConfig(
         standard_lib_logging_config=LoggingConfig(
             root={"level": logging.getLevelName(settings.log.LEVEL), "handlers": ["queue_listener"]},
             loggers={
-                "uvicorn.access": {
-                    "propagate": False,
-                    "level": settings.log.UVICORN_ACCESS_LEVEL,
-                    "handlers": ["queue_listener"],
-                },
-                "uvicorn.error": {
-                    "propagate": False,
-                    "level": settings.log.UVICORN_ERROR_LEVEL,
-                    "handlers": ["queue_listener"],
-                },
-                "granian.access": {
-                    "propagate": False,
-                    "level": settings.log.GRANIAN_ACCESS_LEVEL,
-                    "handlers": ["queue_listener"],
-                },
-                "granian.error": {
-                    "propagate": False,
-                    "level": settings.log.GRANIAN_ERROR_LEVEL,
-                    "handlers": ["queue_listener"],
-                },
                 "saq": {
                     "propagate": False,
                     "level": settings.log.SAQ_LEVEL,
