@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Annotated
+from typing import TYPE_CHECKING, Annotated, Any
 
-from litestar import Controller, delete, get, patch, post
+from litestar import Controller, Request, Response, delete, get, patch, post
 from litestar.di import Provide
 from litestar.params import Dependency, Parameter
 
@@ -123,3 +123,18 @@ class CompetitionController(Controller):
     ) -> None:
         """Delete a competition from the system."""
         _ = await competitions_service.delete(competition_id)
+
+    @get(
+        component="competition/CompetitionCreate",
+        name="web:competitions:create",
+        path="/competitions/create",
+        cache=False,
+        exclude_from_auth=False,
+        include_in_schema=False,
+    )
+    async def show_create_competition(
+            self,
+            request: Request,
+    ) -> Response[Any] | dict[str, str]:
+        """Show the competition creation page."""
+        return {}
