@@ -132,12 +132,12 @@ class AccessController(Controller):
 
     @post(
         component="auth/Login",
-        operation_id="AccountLogin",
         name="authenticate-user",
         path="/login",
         cache=False,
         summary="Login",
         exclude_from_auth=True,
+        include_in_schema=False,
     )
     async def login_web(
         self,
