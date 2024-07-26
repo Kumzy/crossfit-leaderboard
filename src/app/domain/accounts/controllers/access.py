@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Annotated
+from typing import Annotated, Any
 
 from advanced_alchemy.utils.text import slugify
 from litestar import Controller, Request, Response, get, post
@@ -35,22 +35,22 @@ class AccessController(Controller):
         "User": User,
     }
 
-    @post(
-        operation_id="AccountLogin",
-        name="account:login",
-        path=urls.ACCOUNT_LOGIN,
-        cache=False,
-        summary="Login",
-        exclude_from_auth=True,
-    )
-    async def login(
-        self,
-        users_service: UserService,
-        data: Annotated[AccountLogin, Body(title="OAuth2 Login", media_type=RequestEncodingType.URL_ENCODED)],
-    ) -> Response[OAuth2Login]:
-        """Authenticate a user."""
-        user = await users_service.authenticate(data.username, data.password)
-        return jwt_auth.login(user.email)
+    # @post(
+    #     operation_id="AccountLogin",
+    #     name="account:login",
+    #     path=urls.ACCOUNT_LOGIN,
+    #     cache=False,
+    #     summary="Login",
+    #     exclude_from_auth=True,
+    # )
+    # async def login(
+    #     self,
+    #     users_service: UserService,
+    #     data: Annotated[AccountLogin, Body(title="OAuth2 Login", media_type=RequestEncodingType.URL_ENCODED)],
+    # ) -> Response[OAuth2Login]:
+    #     """Authenticate a user."""
+    #     user = await users_service.authenticate(data.username, data.password)
+    #     return jwt_auth.login(user.email)
 
     @post(
         operation_id="AccountLogout",
@@ -123,28 +123,45 @@ class AccessController(Controller):
     async def show_login(
             self,
             request: Request,
-    ) -> Response | dict[str, str]:
+    ) -> Response | dict:
         """Show the user login page."""
         if request.session.get("current_user", False):
             flash(request, "Your account is already authenticated.  Welcome back!", category="info")
             return InertiaRedirect(request.url_for("dashboard"))
         return {}
 
-    @post(
-        component="auth/Login",
-        name="authenticate-user",
-        path="/login",
-        cache=False,
-        summary="Login",
-        exclude_from_auth=True,
-        include_in_schema=False,
-    )
-    async def login_web(
-        self,
-        users_service: UserService,
-        data: Annotated[AccountLogin, Body(title="OAuth2 Login", media_type=RequestEncodingType.URL_ENCODED)],
-    ) -> Response[OAuth2Login]:
+    # @post(
+    #     component="auth/Login",
+    #     name="authenticate-user",
+    #     path="/login",
+    #     cache=False,
+    #     summary="Login",
+    #     exclude_from_auth=True,
+    #     include_in_schema=False,
+    # )
+    # async def login_web(
+    #     self,
+    #     users_service: UserService,
+    #     data: Annotated[AccountLogin, Body(title="OAuth2 Login", media_type=RequestEncodingType.URL_ENCODED)],
+    # ) -> Response[OAuth2Login]:
+    #     """Authenticate a user."""
+    #     user = await users_service.authenticate(data.username, data.password)
+    #
+    #     return jwt_auth.login(user.email)
+    @post(component="auth/login", name="login.store", path="/login")
+    async def login(
+            self,
+            request: Request[Any, Any, Any],
+            users_service: UserService,
+            data: Annotated[AccountLogin, Body(title="OAuth2 Login", media_type=RequestEncodingType.URL_ENCODED)],
+    ) -> Response | Response[OAuth2Login]:
         """Authenticate a user."""
+        print(request.headers)
         user = await users_service.authenticate(data.username, data.password)
-
-        return jwt_auth.login(user.email)
+        if 'x-inertia' in request.headers and request.headers['x-inertia'] == 'true':
+            request.set_session({"user_id": user.email})
+            flash(request, "Your account was successfully authenticated.", category="info")
+            request.logger.info("Redirecting to %s ", request.url_for("dashboard"))
+            return InertiaRedirect(request, request.url_for("dashboard"))
+        else:
+            return jwt_auth.login(user.email)

@@ -1,26 +1,24 @@
 <script setup lang="ts">
-
 // Define the props interface
 interface MenuItem {
-  icon: string;
-  label: string;
-  url: string;
-  route: string;
-  href: string;
+  icon: string
+  label: string
+  url: string
+  route: string
+  href: string
 }
 
 interface Props {
-  menuItems: MenuItem[];
+  menuItems: MenuItem[]
 }
 // Use defineProps to declare props
 // const items = defineProps<Props>();
 
 const items: MenuItem[] = [
-  { icon: 'path/to/icon1.png', label: 'Home', url: '/' },
-  { icon: 'path/to/icon2.png', label: 'About', url: '/about' },
-  { icon: 'path/to/icon3.png', label: 'Contact', url: '/contact' },
+  { icon: "path/to/icon1.png", label: "Home", url: "/" },
+  { icon: "path/to/icon2.png", label: "About", url: "/about" },
+  { icon: "path/to/icon3.png", label: "Contact", url: "/contact" },
 ]
-
 </script>
 
 <template>

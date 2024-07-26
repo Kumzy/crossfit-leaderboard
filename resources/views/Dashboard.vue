@@ -1,20 +1,25 @@
 <script setup>
-import { ref } from "vue";
 import { Head, Link } from "@inertiajs/vue3"
-import Button from 'primevue/button';
-import InputNumber from 'primevue/inputnumber';
-import DatePicker from 'primevue/datepicker';
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
+import Button from "primevue/button"
+import DatePicker from "primevue/datepicker"
+import InputNumber from "primevue/inputnumber"
+import { useToast } from "primevue/usetoast"
+import { ref } from "vue"
+const toast = useToast()
 defineProps({
   content: {
     message: String,
   },
 })
 const showToast = () => {
-    toast.add({ severity: "success", summary: "Competition created", detail: "test", life: 3000 });
-};
-const count = ref(0);
+  toast.add({
+    severity: "success",
+    summary: "Competition created",
+    detail: "test",
+    life: 3000,
+  })
+}
+const count = ref(0)
 </script>
 
 <template>

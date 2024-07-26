@@ -29,6 +29,7 @@ class WebController(Controller):
         component="Dashboard",
         path="/dashboard",
         name="dashboard",
+        include_in_schema=False,
     )
     async def dashboard(self, path: str | None = None) -> Message:
         """Serve site root."""
@@ -38,9 +39,9 @@ class WebController(Controller):
         component="Leaderboard",
         path="/leaderboard",
         name="leaderboard",
+        include_in_schema=False,
     )
     async def leaderboard(self, request: Request[Any, Any, Any]) -> dict[str, Any]:
         """Serve leaderboard page."""
         share(request,"auth", {"user": "nobody"})
-        #flash(request, "Oh no! I've been flashed!", category="error")
         return {"thing": "value"}

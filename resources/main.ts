@@ -1,13 +1,13 @@
 import "@/assets/styles/main.css"
 
 import Layout from "@/layouts/Layout.vue"
-import PrimeVue from "primevue/config";
-import Button from "primevue/button";
-import InputNumber from 'primevue/inputnumber';
-import DatePicker from 'primevue/datepicker';
-import Toast from "primevue/toast";
-import ToastService from "primevue/toastservice";
-import Lara from '@primevue/themes/aura';
+import Lara from "@primevue/themes/aura"
+import Button from "primevue/button"
+import PrimeVue from "primevue/config"
+import DatePicker from "primevue/datepicker"
+import InputNumber from "primevue/inputnumber"
+import Toast from "primevue/toast"
+import ToastService from "primevue/toastservice"
 
 import { createInertiaApp } from "@inertiajs/vue3"
 import { createApp, h } from "vue"
@@ -27,13 +27,13 @@ createInertiaApp({
       .use(ToastService)
       .use(PrimeVue, {
         theme: {
-          preset: Lara
-        }
+          preset: Lara,
+        },
       })
-      .component('Toast',Toast)
-      .component('Button', Button)
-      .component('InputNumber', InputNumber)
-      .component('DatePicker', DatePicker)
+      .component("Toast", Toast)
+      .component("Button", Button)
+      .component("InputNumber", InputNumber)
+      .component("DatePicker", DatePicker)
       .mount(el)
   },
 })
