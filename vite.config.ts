@@ -1,6 +1,7 @@
 import path from "node:path"
 import vue from "@vitejs/plugin-vue"
 import litestar from "litestar-vite-plugin"
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from "vite"
 
 const ASSET_URL = process.env.ASSET_URL || "/static/"
@@ -18,6 +19,7 @@ export default defineConfig({
       host: `${VITE_HOST}`,
     },
   },
+
   plugins: [
     vue({
       template: {
@@ -44,6 +46,13 @@ export default defineConfig({
       resourceDirectory: "resources",
       hotFile: "src/app/domain/web/public/hot",
     }),
+    sentryVitePlugin({
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+
+      // Auth tokens can be obtained from https://sentry.io/orgredirect/organizations/:orgslug/settings/auth-tokens/
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+    }),
   ],
   resolve: {
     alias: {
@@ -51,6 +60,7 @@ export default defineConfig({
     },
   },
   build: {
+    sourcemap: true, // Required for sentry
     rollupOptions: {
       output: {
         manualChunks(id) {

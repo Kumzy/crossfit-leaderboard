@@ -5,16 +5,34 @@ import { route } from "litestar-vite-plugin/inertia-helpers"
 
 defineProps({ errors: Object })
 
-// const form: API.AccountLogin.RequestBody = {
-//   password: null,
-//   username: null,
-// };
-//const form: API.AccountLogin.RequestBody = reactive({});
-
 const form = useForm({
   username: null,
   password: null,
 })
+
+async function onSubmit(values: form) {
+  try {
+    // setIsLoading(true)
+    form.post(route("login"))
+    router.post(route("login"), values, {
+      onError: (err) => {
+        console.log(err)
+        if ("username" in err && typeof err.username === "string") {
+          form.setError("root", { message: err.username })
+        }
+      },
+    })
+  } catch (error: any) {
+    console.log(error)
+    toast(
+      content?.message ??
+        error.response?.data?.detail ??
+        "There was an unexpected error logging in."
+    )
+  } finally {
+    setIsLoading(false)
+  }
+}
 </script>
 
 <template>
@@ -26,12 +44,13 @@ const form = useForm({
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form @submit.prevent="form.post(route('login'))">
+<!--      <form @submit.prevent="form.handleSubmit(onSubmit)">-->
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
           <div class="mt-2">
             <input id="username" v-model="form.username" name="username" type="email" autocomplete="email" required="" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
           </div>
-          <div v-if="form.errors.username">{{ form.errors.username }}</div>
+          <div v-if="form.errors">{{ form.errors.username }}</div>
         </div>
 
         <div>

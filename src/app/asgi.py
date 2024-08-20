@@ -27,10 +27,24 @@ def create_app() -> Litestar:
     from app.domain.teams import signals as team_signals
     from app.lib.dependencies import create_collection_dependencies
     from app.server import openapi, plugins, routers
+    import sentry_sdk
+    from sentry_sdk.integrations.litestar import LitestarIntegration
 
     dependencies = {constants.USER_DEPENDENCY_KEY: Provide(provide_user)}
     dependencies.update(create_collection_dependencies())
     settings = get_settings()
+
+    sentry_sdk.init(
+        dsn=settings.sentry.DSN,
+        debug=settings.sentry.DEBUG,
+        environment=settings.sentry.ENVIRONMENT,
+        traces_sample_rate=1.0,
+        profiles_sample_rate=1.0,
+        integrations=[
+            LitestarIntegration(),
+        ],
+    )
+
 
     return Litestar(
         cors_config=config.cors,

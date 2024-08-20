@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Annotated, Any
+from typing import Any
 
 from advanced_alchemy.utils.text import slugify
 from litestar import Controller, Request, Response, get, post
@@ -35,46 +35,21 @@ class AccessController(Controller):
         "User": User,
     }
 
-    # @post(
-    #     operation_id="AccountLogin",
-    #     name="account:login",
-    #     path=urls.ACCOUNT_LOGIN,
-    #     cache=False,
-    #     summary="Login",
-    #     exclude_from_auth=True,
-    # )
-    # async def login(
-    #     self,
-    #     users_service: UserService,
-    #     data: Annotated[AccountLogin, Body(title="OAuth2 Login", media_type=RequestEncodingType.URL_ENCODED)],
-    # ) -> Response[OAuth2Login]:
-    #     """Authenticate a user."""
-    #     user = await users_service.authenticate(data.username, data.password)
-    #     return jwt_auth.login(user.email)
-
     @post(
-        operation_id="AccountLogout",
         name="account:logout",
         path=urls.ACCOUNT_LOGOUT,
+        exclude_from_auth=False,
         cache=False,
         summary="Logout",
-        exclude_from_auth=True,
     )
     async def logout(
-        self,
-        request: Request,
+            self,
+            request: Request,
     ) -> Response:
         """Account Logout"""
-        request.cookies.pop(jwt_auth.key, None)
+        flash(request, "You have been logged out.", category="info")
         request.clear_session()
-
-        response = Response(
-            {"message": "OK"},
-            status_code=200,
-        )
-        response.delete_cookie(jwt_auth.key)
-
-        return response
+        return InertiaRedirect(request, request.url_for("login"))
 
     @post(
         operation_id="AccountRegister",
@@ -125,43 +100,21 @@ class AccessController(Controller):
             request: Request,
     ) -> Response | dict:
         """Show the user login page."""
-        if request.session.get("current_user", False):
+        if request.session.get("user_id", False):
             flash(request, "Your account is already authenticated.  Welcome back!", category="info")
-            return InertiaRedirect(request.url_for("dashboard"))
+            return InertiaRedirect(request, request.url_for("dashboard"))
         return {}
 
-    # @post(
-    #     component="auth/Login",
-    #     name="authenticate-user",
-    #     path="/login",
-    #     cache=False,
-    #     summary="Login",
-    #     exclude_from_auth=True,
-    #     include_in_schema=False,
-    # )
-    # async def login_web(
-    #     self,
-    #     users_service: UserService,
-    #     data: Annotated[AccountLogin, Body(title="OAuth2 Login", media_type=RequestEncodingType.URL_ENCODED)],
-    # ) -> Response[OAuth2Login]:
-    #     """Authenticate a user."""
-    #     user = await users_service.authenticate(data.username, data.password)
-    #
-    #     return jwt_auth.login(user.email)
     @post(component="auth/login", name="login.store", path="/login")
     async def login(
             self,
             request: Request[Any, Any, Any],
             users_service: UserService,
-            data: Annotated[AccountLogin, Body(title="OAuth2 Login", media_type=RequestEncodingType.URL_ENCODED)],
-    ) -> Response | Response[OAuth2Login]:
+            data: AccountLogin,
+    ) -> Response:
         """Authenticate a user."""
-        print(request.headers)
         user = await users_service.authenticate(data.username, data.password)
-        if 'x-inertia' in request.headers and request.headers['x-inertia'] == 'true':
-            request.set_session({"user_id": user.email})
-            flash(request, "Your account was successfully authenticated.", category="info")
-            request.logger.info("Redirecting to %s ", request.url_for("dashboard"))
-            return InertiaRedirect(request, request.url_for("dashboard"))
-        else:
-            return jwt_auth.login(user.email)
+        request.set_session({"user_id": user.email})
+        flash(request, "Your account was successfully authenticated.", category="info")
+        request.logger.info("Redirecting to %s ", request.url_for("dashboard"))
+        return InertiaRedirect(request, request.url_for("dashboard"))

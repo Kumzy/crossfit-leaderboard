@@ -421,6 +421,31 @@ class AppSettings:
                 # Split the string by commas into a list if it is not meant to be a list representation.
                 self.ALLOWED_CORS_ORIGINS = [host.strip() for host in self.ALLOWED_CORS_ORIGINS.split(",")]
 
+@dataclass
+class SentrySettings:
+    """Server configurations."""
+
+    DSN: str = field(default_factory=lambda: os.getenv("SENTRY_DSN", ""))
+    """The DSN tells the SDK where to send the events. If this option is not sent, the SDK will just not send any data."""
+
+    DEBUG: bool = field(
+        default_factory=lambda: os.getenv("SENTRY_DEBUG", "False") in TRUE_VALUES,
+    )
+    """Turns debug mode on or off. When True, the SDK will attempt to print out debugging information.
+    This can be useful if something goes wrong with event sending. The default is always False.
+    It's generally not recommended to turn it on in production because of the increase in log output."""
+
+    RELEASE: str = field(default_factory=lambda: os.getenv("SENTRY_RELEASE", ""))
+    """Sets the release. If not set, the SDK will try to automatically configure a release out of the box
+    but it's a better idea to manually set it to guarantee that the release is in sync with your deploy integrations.
+    Release names are strings, but some formats are detected by Sentry and might be rendered differently.
+    See the releases documentation to learn how the SDK tries to automatically configure a release.
+    The release config option takes precedence over the environment variable."""
+
+    ENVIRONMENT: str = field(default_factory=lambda: os.getenv("SENTRY_ENVIRONMENT", ""))
+    """Sets the environment. This string is freeform and set to production by default.
+    A release can be associated with more than one environment to separate them in the UI (think staging vs production or similar)."""
+
 
 @dataclass
 class Settings:
@@ -431,6 +456,7 @@ class Settings:
     log: LogSettings = field(default_factory=LogSettings)
     redis: RedisSettings = field(default_factory=RedisSettings)
     saq: SaqSettings = field(default_factory=SaqSettings)
+    sentry: SentrySettings = field(default_factory=SentrySettings)
 
     @classmethod
     def from_env(cls, dotenv_filename: str = ".env") -> Settings:

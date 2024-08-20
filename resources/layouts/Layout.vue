@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import SidebarCompetition from "@/components/sidebar/SidebarCompetition.vue"
-import { route } from "@/utils/route.ts"
 import { Link } from "@inertiajs/vue3"
+import { route } from "litestar-vite-plugin/inertia-helpers"
 </script>
 
 <template>
   <main>
     <header>
-      <Link class="text-sm m-2" href="/">Home</Link>
-      <Link class="text-sm m-2" href="/dashboard/">Dashboard</Link>
-      <Link class="text-sm m-2" href="/login/">Login</Link>
-      <Link class="text-sm m-2" href="/leaderboard/">Leaderboard</Link>
+      <Link class="text-sm m-2" :href="route('home')">Home</Link>
+      <Link class="text-sm m-2" :href="route('dashboard')">Dashboard</Link>
+      <Link class="text-sm m-2" :href="route('login')">Login</Link>
+      <Link class="text-sm m-2" :href="route('leaderboard')">Leaderboard</Link>
     </header>
     <div>
       <SidebarCompetition/>
