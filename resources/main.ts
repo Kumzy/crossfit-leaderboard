@@ -2,13 +2,13 @@ import "@/assets/styles/main.css"
 
 import Layout from "@/layouts/Layout.vue"
 import Lara from "@primevue/themes/aura"
+import * as Sentry from "@sentry/vue"
 import Button from "primevue/button"
 import PrimeVue from "primevue/config"
 import DatePicker from "primevue/datepicker"
 import InputNumber from "primevue/inputnumber"
 import Toast from "primevue/toast"
 import ToastService from "primevue/toastservice"
-import * as Sentry from "@sentry/vue";
 
 import { createInertiaApp } from "@inertiajs/vue3"
 import { createApp, h } from "vue"
@@ -36,10 +36,10 @@ createInertiaApp({
       // of transactions for performance monitoring.
       // We recommend adjusting this value in production
       tracesSampleRate: 1.0,
+    })
 
-    });
-
-    app.use(plugin)
+    app
+      .use(plugin)
       .use(ToastService)
       .use(PrimeVue, {
         theme: {

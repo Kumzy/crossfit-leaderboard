@@ -90,3 +90,4 @@ async def test_accounts_with_incorrect_role(client: "AsyncClient", user_token_he
     assert response.status_code == 403
     response = await client.delete("/api/users/97108ac1-ffcb-411d-8b1e-d9183399f63b", headers=user_token_headers)
     assert response.status_code == 403
+

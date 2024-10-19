@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from advanced_alchemy.exceptions import RepositoryError
+from advanced_alchemy.repository import Empty, EmptyType, ErrorMessages
 from advanced_alchemy.service import SQLAlchemyAsyncRepositoryService, is_dict, is_msgspec_model, is_pydantic_model
 from advanced_alchemy.utils.text import slugify
 from uuid_utils.compat import uuid4
@@ -18,7 +19,7 @@ if TYPE_CHECKING:
     from uuid import UUID
 
     from advanced_alchemy.filters import FilterTypes
-    from advanced_alchemy.repository._util import LoadSpec
+    from advanced_alchemy.repository import LoadSpec
     from advanced_alchemy.service import ModelDictT
     from msgspec import Struct
     from sqlalchemy.orm import InstrumentedAttribute
@@ -53,11 +54,10 @@ class TeamService(SQLAlchemyAsyncRepositoryService[Team]):
         self,
         data: ModelDictT[Team],
         *,
-        load: LoadSpec | None = None,
-        execution_options: dict[str, Any] | None = None,
         auto_commit: bool | None = None,
         auto_expunge: bool | None = None,
         auto_refresh: bool | None = None,
+        error_messages: ErrorMessages | None | EmptyType = Empty,
     ) -> Team:
         """Create a new team with an owner."""
         owner_id: UUID | None = None
@@ -83,15 +83,13 @@ class TeamService(SQLAlchemyAsyncRepositoryService[Team]):
                     for tag_text in tags_added
                 ],
             )
-        await super().create(
+        return await super().create(
             data=data,
-            load=load,
-            execution_options=execution_options,
             auto_commit=auto_commit,
-            auto_expunge=True,
-            auto_refresh=False,
+            auto_expunge=auto_expunge,
+            auto_refresh=auto_refresh,
+            error_messages=error_messages,
         )
-        return data
 
     async def update(
         self,
@@ -99,13 +97,14 @@ class TeamService(SQLAlchemyAsyncRepositoryService[Team]):
         item_id: Any | None = None,
         *,
         id_attribute: str | InstrumentedAttribute[Any] | None = None,
-        load: LoadSpec | None = None,
-        execution_options: dict[str, Any] | None = None,
         attribute_names: Iterable[str] | None = None,
         with_for_update: bool | None = None,
         auto_commit: bool | None = None,
         auto_expunge: bool | None = None,
         auto_refresh: bool | None = None,
+        error_messages: ErrorMessages | None | EmptyType = Empty,
+        load: LoadSpec | None = None,
+        execution_options: dict[str, Any] | None = None,
     ) -> Team:
         """Wrap repository update operation.
 
@@ -132,13 +131,14 @@ class TeamService(SQLAlchemyAsyncRepositoryService[Team]):
             data=data,
             item_id=item_id,
             attribute_names=attribute_names,
-            id_attribute=id_attribute,
-            load=load,
-            execution_options=execution_options,
             with_for_update=with_for_update,
             auto_commit=auto_commit,
             auto_expunge=auto_expunge,
             auto_refresh=auto_refresh,
+            id_attribute=id_attribute,
+            error_messages=error_messages,
+            load=load,
+            execution_options=execution_options,
         )
 
     async def to_model(self, data: Team | dict[str, Any] | Struct, operation: str | None = None) -> Team:

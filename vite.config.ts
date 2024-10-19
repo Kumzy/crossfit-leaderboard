@@ -1,7 +1,7 @@
 import path from "node:path"
+import { sentryVitePlugin } from "@sentry/vite-plugin"
 import vue from "@vitejs/plugin-vue"
 import litestar from "litestar-vite-plugin"
-import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from "vite"
 
 const ASSET_URL = process.env.ASSET_URL || "/static/"

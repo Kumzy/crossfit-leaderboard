@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, TypeVar
 
 from litestar.config.response_cache import ResponseCacheConfig, default_cache_key_builder
 from litestar.plugins import CLIPluginProtocol, InitPluginProtocol
-from litestar.security.jwt import OAuth2Login
 from litestar.stores.redis import RedisStore
 from litestar.stores.registry import StoreRegistry
 
@@ -51,7 +50,6 @@ class ApplicationConfigurator(InitPluginProtocol, CLIPluginProtocol):
 
         from advanced_alchemy.exceptions import RepositoryError
         from litestar.middleware.session.server_side import ServerSideSessionConfig
-        from litestar.security.jwt import Token
 
         from app.config import constants, get_settings
         from app.db.models import User as UserModel
@@ -69,8 +67,6 @@ class ApplicationConfigurator(InitPluginProtocol, CLIPluginProtocol):
         app_config.on_shutdown.append(self.redis.aclose)  # type: ignore[attr-defined]
         app_config.signature_namespace.update(
             {
-                "Token": Token,
-                "OAuth2Login": OAuth2Login,
                 "UserModel": UserModel,
             },
         )

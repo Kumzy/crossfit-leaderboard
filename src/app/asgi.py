@@ -13,22 +13,23 @@ if TYPE_CHECKING:
 def create_app() -> Litestar:
     """Create ASGI application."""
 
+    import sentry_sdk
     from litestar import Litestar
     from litestar.di import Provide
     from litestar.middleware.session.server_side import ServerSideSessionConfig
     from litestar.stores.memory import MemoryStore
+    from sentry_sdk.integrations.asyncpg import AsyncPGIntegration
+    from sentry_sdk.integrations.litestar import LitestarIntegration
+    from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
     from app.config import app as config
     from app.config import constants
     from app.config.base import get_settings
     from app.domain.accounts import signals as account_signals
     from app.domain.accounts.dependencies import provide_user
-    from app.domain.accounts.guards import jwt_auth
     from app.domain.teams import signals as team_signals
     from app.lib.dependencies import create_collection_dependencies
     from app.server import openapi, plugins, routers
-    import sentry_sdk
-    from sentry_sdk.integrations.litestar import LitestarIntegration
 
     dependencies = {constants.USER_DEPENDENCY_KEY: Provide(provide_user)}
     dependencies.update(create_collection_dependencies())
@@ -42,6 +43,8 @@ def create_app() -> Litestar:
         profiles_sample_rate=1.0,
         integrations=[
             LitestarIntegration(),
+            AsyncPGIntegration(),
+            SqlalchemyIntegration(),
         ],
     )
 
@@ -63,7 +66,6 @@ def create_app() -> Litestar:
             plugins.inertia,
             plugins.flasher,
         ],
-        on_app_init=[jwt_auth.on_app_init],
         listeners=[account_signals.user_created_event_handler, team_signals.team_created_event_handler],
         stores={"sessions": MemoryStore()},
     )

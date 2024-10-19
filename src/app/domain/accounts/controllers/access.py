@@ -10,13 +10,12 @@ from litestar.di import Provide
 from litestar.enums import RequestEncodingType
 from litestar.params import Body
 from litestar.plugins.flash import flash
-from litestar.security.jwt import OAuth2Login
 from litestar_vite.inertia import InertiaRedirect
 
 from app.db.models import User as UserModel  # noqa: TCH001
 from app.domain.accounts import urls
 from app.domain.accounts.dependencies import provide_roles_service, provide_users_service
-from app.domain.accounts.guards import jwt_auth, requires_active_user
+from app.domain.accounts.guards import requires_active_user
 from app.domain.accounts.schemas import AccountLogin, AccountRegister, User
 from app.domain.accounts.services import RoleService, UserService
 
@@ -29,7 +28,6 @@ class AccessController(Controller):
     signature_namespace = {
         "UserService": UserService,
         "RoleService": RoleService,
-        "OAuth2Login": OAuth2Login,
         "RequestEncodingType": RequestEncodingType,
         "Body": Body,
         "User": User,
@@ -87,8 +85,9 @@ class AccessController(Controller):
         """User Profile."""
         return users_service.to_schema(current_user, schema_type=User)
 
+    # @sentry_sdk.trace
     @get(
-        component="auth/Login",
+        component="auth/login",
         name="login",
         path="/login",
         cache=False,
@@ -105,6 +104,7 @@ class AccessController(Controller):
             return InertiaRedirect(request, request.url_for("dashboard"))
         return {}
 
+    # @sentry_sdk.trace
     @post(component="auth/login", name="login.store", path="/login")
     async def login(
             self,

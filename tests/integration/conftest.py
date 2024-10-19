@@ -15,7 +15,6 @@ from sqlalchemy.pool import NullPool
 
 from app.config import get_settings
 from app.db.models import Team, User
-from app.domain.accounts.guards import jwt_auth
 from app.domain.accounts.services import RoleService, UserService
 from app.domain.teams.services import TeamService
 from app.server.builder import ApplicationConfigurator
@@ -29,7 +28,7 @@ pytestmark = pytest.mark.anyio
 async def fx_engine(
     postgres_docker_ip: str,
     postgres_service: None,
-    redis_service: None,
+    valkey_service: None,
     postgres_port: int,
     postgres_user: str,
     postgres_password: str,
@@ -151,25 +150,3 @@ async def fx_client(app: Litestar) -> AsyncIterator[AsyncClient]:
     """
     async with AsyncClient(app=app, base_url="http://testserver", timeout=10) as client:
         yield client
-
-
-@pytest.fixture(name="superuser_token_headers")
-def fx_superuser_token_headers() -> dict[str, str]:
-    """Valid superuser token.
-
-    ```text
-    ValueError: The future belongs to a different loop than the one specified as the loop argument
-    ```
-    """
-    return {"Authorization": f"Bearer {jwt_auth.create_token(identifier='superuser@example.com')}"}
-
-
-@pytest.fixture(name="user_token_headers")
-def fx_user_token_headers() -> dict[str, str]:
-    """Valid user token.
-
-    ```text
-    ValueError: The future belongs to a different loop than the one specified as the loop argument
-    ```
-    """
-    return {"Authorization": f"Bearer {jwt_auth.create_token(identifier='user@example.com')}"}
