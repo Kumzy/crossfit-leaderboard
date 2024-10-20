@@ -1,4 +1,4 @@
-COMPETITION_LIST = "/api/competitions"
+COMPETITION_LIST = "/competitions"
 COMPETITION_DELETE = "/api/competitions/{competition_id:uuid}"
 COMPETITION_DETAIL = "/api/competitions/{competition_id:uuid}"
 COMPETITION_UPDATE = "/api/competitions/{competition_id:uuid}"

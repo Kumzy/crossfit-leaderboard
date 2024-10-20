@@ -29,7 +29,6 @@ class WebController(Controller):
         if request.session.get("user_id", False):
             return InertiaRedirect(request, request.url_for("dashboard"))
         return InertiaRedirect(request, request.url_for("landing"))
-        # return Message("Welcome back.")
 
     @get(
         component="Dashboard",
