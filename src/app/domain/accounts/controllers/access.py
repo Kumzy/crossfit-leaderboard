@@ -43,7 +43,7 @@ class AccessController(Controller):
     async def logout(
             self,
             request: Request,
-    ) -> Response:
+    ) -> Response | InertiaRedirect:
         """Account Logout"""
         flash(request, "You have been logged out.", category="info")
         request.clear_session()
@@ -97,7 +97,7 @@ class AccessController(Controller):
     async def show_login(
             self,
             request: Request,
-    ) -> Response | dict:
+    ) -> Response | dict | InertiaRedirect:
         """Show the user login page."""
         if request.session.get("user_id", False):
             flash(request, "Your account is already authenticated.  Welcome back!", category="info")
@@ -111,7 +111,7 @@ class AccessController(Controller):
             request: Request[Any, Any, Any],
             users_service: UserService,
             data: AccountLogin,
-    ) -> Response:
+    ) -> Response | InertiaRedirect:
         """Authenticate a user."""
         user = await users_service.authenticate(data.username, data.password)
         request.set_session({"user_id": user.email})

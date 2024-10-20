@@ -34,12 +34,15 @@ class ApplicationConfigurator(InitPluginProtocol, CLIPluginProtocol):
 
     def on_cli_init(self, cli: Group) -> None:
         from app.cli.commands import user_management_app
+        from app.cli.manage import data_management_app
         from app.config import get_settings
 
         settings = get_settings()
         self.redis = settings.redis.get_client()
         self.app_slug = settings.app.slug
         cli.add_command(user_management_app)
+        cli.add_command(data_management_app)
+
 
     def on_app_init(self, app_config: AppConfig) -> AppConfig:
         """Configure application for use with SQLAlchemy.

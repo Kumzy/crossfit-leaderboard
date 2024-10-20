@@ -5,6 +5,7 @@ from uuid import UUID  # noqa: TCH003
 
 import msgspec
 
+from app.domain.divisions.schemas import Division
 from app.lib.schema import CamelizedBaseStruct
 
 __all__ = (
@@ -20,6 +21,9 @@ class Competition(CamelizedBaseStruct):
     id: UUID
     name: str | None = None
     description: str | None = None
+    date_start: datetime | None = None
+    date_end: datetime | None = None
+    divisions: list[Division] = []
 
 
 class CompetitionCreate(CamelizedBaseStruct):

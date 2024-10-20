@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from app.domain.accounts.controllers import AccessController, UserController, UserRoleController
 from app.domain.competitions.controllers import CompetitionController
+from app.domain.currencies.controllers import CurrencyController
 from app.domain.divisions.controllers import DivisionController
 from app.domain.system.controllers import SystemController
 from app.domain.tags.controllers import TagController
@@ -19,6 +20,7 @@ route_handlers: list[ControllerRouterHandler] = [
     AccessController,
     UserController,
     TeamController,
+    CurrencyController,
     UserRoleController,
     #  TeamInvitationController,
     TeamMemberController,

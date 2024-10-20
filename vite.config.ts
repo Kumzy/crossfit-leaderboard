@@ -3,7 +3,7 @@ import { sentryVitePlugin } from "@sentry/vite-plugin"
 import vue from "@vitejs/plugin-vue"
 import litestar from "litestar-vite-plugin"
 import { defineConfig } from "vite"
-import vueDevTools from 'vite-plugin-vue-devtools'
+import vueDevTools from "vite-plugin-vue-devtools"
 
 const ASSET_URL = process.env.ASSET_URL || "/static/"
 const VITE_PORT = process.env.VITE_PORT || "5173"

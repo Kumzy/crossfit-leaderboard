@@ -31,7 +31,7 @@ class CompetitionController(Controller):
     return_dto = None
 
     @get(
-        component="competitions/list",
+        component="competition/list",
         operation_id="ListCompetitions",
         name="competitions.list",
         summary="List Competitions",

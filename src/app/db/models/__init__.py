@@ -1,5 +1,6 @@
 from .competition import Competition
 from .country import Country
+from .currency import Currency
 from .division import Division
 from .division_scoring_type import DivisionScoringType
 from .oauth_account import UserOauthAccount
@@ -17,6 +18,7 @@ from .workout import Workout
 __all__ = (
     "Competition",
     "Country",
+    "Currency",
     "Division",
     "DivisionScoringType",
     "Workout",
