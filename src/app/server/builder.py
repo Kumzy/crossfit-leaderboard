@@ -47,6 +47,7 @@ class ApplicationConfigurator(InitPluginProtocol, CLIPluginProtocol):
         Args:
             app_config: The :class:`AppConfig <.config.app.AppConfig>` instance.
         """
+        from uuid import UUID
 
         from advanced_alchemy.exceptions import RepositoryError
         from litestar.middleware.session.server_side import ServerSideSessionConfig
@@ -68,6 +69,7 @@ class ApplicationConfigurator(InitPluginProtocol, CLIPluginProtocol):
         app_config.signature_namespace.update(
             {
                 "UserModel": UserModel,
+                "UUID": UUID,
             },
         )
         app_config.exception_handlers = {

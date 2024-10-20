@@ -1,7 +1,8 @@
-const { fontFamily } = require("tailwindcss/defaultTheme")
-
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+import forms from 'tailwindcss';
+import typography from 'tailwindcss';
+
+export default  {
   darkMode: ["class"],
   content: [
     "src/app/domain/web/{resources,templates}/**/*.{js,jsx,ts,cjs,mjs,tsx,vue,j2,html,htm}",
@@ -10,5 +11,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
+  plugins: [forms, typography],
 }

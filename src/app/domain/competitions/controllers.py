@@ -31,12 +31,13 @@ class CompetitionController(Controller):
     return_dto = None
 
     @get(
+        component="competitions/list",
         operation_id="ListCompetitions",
-        name="competitions:list",
+        name="competitions.list",
         summary="List Competitions",
         description="Retrieve the competitions.",
         path=urls.COMPETITION_LIST,
-        cache=60,
+        cache=0,
     )
     async def list_competitions(
         self,

@@ -1,99 +1,59 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { Link } from "@inertiajs/vue3"
-import { useForm } from "@inertiajs/vue3"
+import { Head } from '@inertiajs/vue3'
 import { route } from "litestar-vite-plugin/inertia-helpers"
+import { useAttrs } from 'vue'
 
-defineProps({ errors: Object })
+defineProps({ competitions: Object })
 
-const form = useForm({
-  name: null,
-  dateStart: null,
-  dateEnd: null,
-  description: null,
-})
+// const attrs = useAttrs()
+//
+console.log(competitions)
+// console.log(attrs.content.competitions)
+
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-bold mb-4">Create a new competition</h2>
-    <form @submit.prevent="form.post(route('competitions:create'))">
-        <div class="mb-4">
-            <label for="title" class="block text-sm font-medium text-gray-700">Competition name</label>
-            <input type="text" id="title" v-model="form.name" name="title" placeholder="Add a competition name"
-                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-        </div>
-        <div class="mb-4">
-            <label for="reminder" class="block text-sm font-medium text-gray-700">Timezone</label>
-            <div class="flex space-x-2 mt-1">
-                <select id="reminder" name="reminder"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    <option>Notification</option>
-                    <option>Email</option>
-                </select>
+  tests
+  <div class="card">
+    <DataView :value="competitions">
+        <template #list="slotProps">
+            <div class="flex flex-col">
+                <div v-for="(item, index) in slotProps.items" :key="index">
+                    <div class="flex flex-col sm:flex-row sm:items-center p-6 gap-4" :class="{ 'border-t border-surface-200 dark:border-surface-700': index !== 0 }">
+                        <div class="md:w-40 relative">
+                            <img class="block xl:block mx-auto rounded w-full" :src="`https://primefaces.org/cdn/primevue/images/product/${item.image}`" :alt="item.name" />
+                            <div class="absolute bg-black/70 rounded-border" style="left: 4px; top: 4px">
+                                <Tag :value="item.inventoryStatus"></Tag>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
+                            <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                                <div>
+                                    <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ item.category }}</span>
+                                    <div class="text-lg font-medium mt-2">{{ item.name }}</div>
+                                </div>
+                                <div class="bg-surface-100 p-1" style="border-radius: 30px">
+                                    <div class="bg-surface-0 flex items-center gap-2 justify-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                                        <span class="text-surface-900 font-medium text-sm">{{ item.rating }}</span>
+                                        <i class="pi pi-star-fill text-yellow-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col md:items-end gap-8">
+                                <span class="text-xl font-semibold">${{ item.price }}</span>
+                                <div class="flex flex-row-reverse md:flex-row gap-2">
+                                    <Button icon="pi pi-heart" outlined></Button>
+                                    <Button icon="pi pi-shopping-cart" label="Buy Now" :disabled="item.inventoryStatus === 'OUTOFSTOCK'" class="flex-auto md:flex-initial whitespace-nowrap"></Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        <div class="mb-4">
-            <label for="date" class="block text-sm font-medium text-gray-700">Competition date</label>
-            <div class="flex space-x-2 items-center">
-                <input type="date" id="date-start" v-model="form.dateStart" name="date-start"
-                    class="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                to
-                <input type="date" id="date-end" v-model="form.dateEnd" name="date-end"
-                    class="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            </div>
-        </div>
-        <div class="mb-4">
-              <label for="date" class="block text-sm font-medium text-gray-700">Registration date</label>
-              <div class="flex space-x-2 items-center">
-                  <input type="date" id="date-start" v-model="form.dateStart" name="date-start"
-                      class="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                  to
-                  <input type="date" id="date-end" v-model="form.dateEnd" name="date-end"
-                      class="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-              </div>
-        </div>
-        <div class="mb-4">
-            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-            <textarea id="description" name="description" v-model="form.description" rows="4" placeholder="Write a description here"
-                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
-        </div>
-        <div class="mb-4">
-              <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
-           <div class="grid grid-cols-2 gap-6">
-                <div>
-                    <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                    <select id="country" name="country" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option>United States</option>
-                        <!-- Add more countries as needed -->
-                    </select>
-                </div>
-                <div>
-                    <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                    <input type="text" name="city" id="city" placeholder="City" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
-                <div>
-                    <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                    <input type="text" name="address" id="address" placeholder="Your Location" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
-                <div>
-                    <label for="zip" class="block text-sm font-medium text-gray-700">ZIP</label>
-                    <input type="text" name="zip" id="zip" placeholder="Your Location" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                </div>
-
-
-            </div>
-<!--              <div class="flex space-x-2 items-center">-->
-<!--                <input type="text" id="title" v-model="form.name" name="title" placeholder="Add a competition name"-->
-<!--                  class="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">-->
-<!--              </div>-->
-        </div>
-        <div class="flex justify-end">
-            <button type="submit"
-                class="w-full md:w-auto flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Create new competition
-            </button>
-        </div>
-    </form>
+        </template>
+    </DataView>
 </div>
 </template>
 
