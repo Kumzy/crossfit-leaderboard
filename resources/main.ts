@@ -51,7 +51,7 @@ createInertiaApp({
       .component("Button", Button)
       .component("InputNumber", InputNumber)
       .component("DatePicker", DatePicker)
-      .component("DataView", DataViewPV)
+      .component("DataViewPV", DataView)
       .mount(el)
   },
 })
