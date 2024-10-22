@@ -50,7 +50,7 @@ class CompetitionController(Controller):
 
     @get(
         operation_id="GetCompetition",
-        name="competitions:get",
+        name="competitions.get",
         path=urls.COMPETITION_DETAIL,
         summary="Retrieve the details of a competition.",
     )
@@ -67,6 +67,27 @@ class CompetitionController(Controller):
     ) -> Competition:
         """Get a competition."""
         db_obj = await competitions_service.get(competition_id)
+        return competitions_service.to_schema(db_obj, schema_type=Competition)
+
+    @get(
+        operation_id="GetCompetitionBySlug",
+        name="competitions.get-by-slug",
+        path=urls.COMPETITION_DETAIL_SLUG,
+        summary="Retrieve the details of a competition from a slug.",
+    )
+    async def get_competition_by_slug(
+            self,
+            competitions_service: CompetitionService,
+            competition_slug: Annotated[
+                str,
+                Parameter(
+                    title="Competition Slug",
+                    description="The competition to retrieve.",
+                ),
+            ],
+    ) -> Competition:
+        """Get a competition."""
+        db_obj = await competitions_service.get(item_id=competition_slug, id_attribute="slug")
         return competitions_service.to_schema(db_obj, schema_type=Competition)
 
     @post(

@@ -1,5 +1,6 @@
 COMPETITION_LIST = "/competitions"
 COMPETITION_DELETE = "/api/competitions/{competition_id:uuid}"
 COMPETITION_DETAIL = "/api/competitions/{competition_id:uuid}"
+COMPETITION_DETAIL_SLUG = "/api/competitions/{competition_slug:str}"
 COMPETITION_UPDATE = "/api/competitions/{competition_id:uuid}"
 COMPETITION_CREATE = "/api/competitions"
