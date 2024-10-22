@@ -5,7 +5,7 @@ import Lara from "@primevue/themes/aura"
 import * as Sentry from "@sentry/vue"
 import Button from "primevue/button"
 import PrimeVue from "primevue/config"
-import DataView from "primevue/dataview"
+import { DataView as DataViewPV } from "primevue/dataview"
 import DatePicker from "primevue/datepicker"
 import InputNumber from "primevue/inputnumber"
 import Toast from "primevue/toast"
@@ -51,7 +51,7 @@ createInertiaApp({
       .component("Button", Button)
       .component("InputNumber", InputNumber)
       .component("DatePicker", DatePicker)
-      .component("DataView", DataView)
+      .component("DataView", DataViewPV)
       .mount(el)
   },
 })

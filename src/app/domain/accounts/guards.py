@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from litestar.handlers.base import BaseRouteHandler
 
 
-__all__ = ("requires_superuser", "requires_active_user", "requires_verified_user", "current_user_from_token")
+__all__ = ("requires_superuser", "requires_active_user", "requires_verified_user", "current_user_from_session")
 
 
 settings = get_settings()

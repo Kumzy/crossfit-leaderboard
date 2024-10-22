@@ -16,4 +16,4 @@ alchemy = SQLAlchemyPlugin(config=config.alchemy)
 granian = GranianPlugin()
 app_config = ApplicationConfigurator()
 inertia = InertiaPlugin(config=InertiaConfig(root_template="site/index.html.j2", redirect_unauthorized_to="/login"))
-flasher = FlashPlugin(config=FlashConfig(template_config=vite.template_config))# type: ignore[attr-defined]
+flasher = FlashPlugin(config=FlashConfig(template_config=vite.template_config))

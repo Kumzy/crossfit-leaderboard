@@ -21,7 +21,6 @@ if TYPE_CHECKING:
     from advanced_alchemy.filters import FilterTypes
     from advanced_alchemy.repository import LoadSpec
     from advanced_alchemy.service import ModelDictT
-    from msgspec import Struct
     from sqlalchemy.orm import InstrumentedAttribute
 
 __all__ = (
@@ -141,7 +140,7 @@ class TeamService(SQLAlchemyAsyncRepositoryService[Team]):
             execution_options=execution_options,
         )
 
-    async def to_model(self, data: Team | dict[str, Any] | Struct, operation: str | None = None) -> Team:
+    async def to_model(self, data: ModelDictT[Team], operation: str | None = None) -> Team:
         if (is_msgspec_model(data) or is_pydantic_model(data)) and operation == "create" and data.slug is None:  # type: ignore[union-attr]
             data.slug = await self.repository.get_available_slug(data.name)  # type: ignore[union-attr]
         if (is_msgspec_model(data) or is_pydantic_model(data)) and operation == "update" and data.slug is None:  # type: ignore[union-attr]

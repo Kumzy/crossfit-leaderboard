@@ -10,7 +10,6 @@ from app.domain.currencies.services import CurrencyService
 class CurrencyController(Controller):
     """Handles the interactions within the Currency objects."""
 
-    # guards = [requires_active_user]
     dependencies = {"currencies_service": Provide(provide_currencies_service)}
     signature_namespace = {"CurrencyService": CurrencyService}
     tags = ["Currencies"]
